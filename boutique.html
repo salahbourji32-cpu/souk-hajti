@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOVAKIT — Gadgets tendances au meilleur prix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0F1A;
+    --panel:#121729;
+    --panel-2:#181f38;
+    --line: rgba(255,255,255,0.08);
+    --text:#F1F3FA;
+    --muted:#8B93AC;
+    --lime:#C8FF4D;
+    --coral:#FF5C6C;
+    --coral-dim: rgba(255,92,108,0.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 500px at 10% -10%, rgba(200,255,77,0.07), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(255,92,108,0.08), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.disp{ font-family:'Space Grotesk', sans-serif; letter-spacing:-0.01em;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 24px;}
+
+  /* ---- Ticker ---- */
+  .ticker{
+    background:var(--lime); color:#0B0F1A; font-weight:600; font-size:13px;
+    padding:8px 0; overflow:hidden; white-space:nowrap;
+  }
+  .ticker-track{ display:inline-block; padding-left:100%; animation:scroll 22s linear infinite;}
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-100%);} }
+
+  /* ---- Header ---- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,15,26,0.85); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px;}
+  .logo{ display:flex; align-items:center; gap:9px; font-size:20px; font-weight:700;}
+  .logo .dot{ width:10px; height:10px; border-radius:2px; background:var(--lime); transform:rotate(45deg);}
+  .navlinks{ display:flex; gap:28px; font-size:14px; color:var(--muted);}
+  .navlinks a:hover{ color:var(--text);}
+  .navright{ display:flex; align-items:center; gap:16px;}
+  .icon-btn{
+    width:38px; height:38px; border-radius:10px; border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; position:relative;
+    background:var(--panel);
+  }
+  .cart-count{
+    position:absolute; top:-6px; right:-6px; background:var(--coral); color:#fff;
+    font-size:10px; font-weight:700; width:18px; height:18px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  @media (max-width:760px){ .navlinks{display:none;} }
+
+  /* ---- Hero ---- */
+  .hero{ padding:64px 24px 40px; text-align:center;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:600;
+    color:var(--lime); background:rgba(200,255,77,0.08); border:1px solid rgba(200,255,77,0.25);
+    padding:6px 14px; border-radius:999px; margin-bottom:22px;
+  }
+  .hero h1{ font-size:clamp(32px,5.5vw,56px); font-weight:700; line-height:1.05; max-width:760px; margin:0 auto 18px;}
+  .hero h1 span{ color:var(--lime);}
+  .hero p{ color:var(--muted); font-size:16px; max-width:520px; margin:0 auto 30px;}
+  .hero-ctas{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+  .btn{
+    padding:14px 26px; border-radius:12px; font-weight:600; font-size:14px; cursor:pointer;
+    border:1px solid transparent; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary{ background:var(--lime); color:#0B0F1A;}
+  .btn-primary:hover{ filter:brightness(1.08);}
+  .btn-ghost{ background:transparent; border-color:var(--line); color:var(--text);}
+  .btn-ghost:hover{ border-color:rgba(255,255,255,0.3);}
+
+  /* ---- Trust bar ---- */
+  .trust{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:16px; overflow:hidden;
+    margin:0 24px 64px; max-width:1132px; margin-left:auto; margin-right:auto;
+  }
+  .trust-item{ background:var(--panel); padding:20px 16px; text-align:center;}
+  .trust-item .t-ic{ font-size:20px; margin-bottom:8px;}
+  .trust-item .t-title{ font-size:13px; font-weight:600;}
+  .trust-item .t-sub{ font-size:11px; color:var(--muted); margin-top:2px;}
+  @media (max-width:700px){ .trust{grid-template-columns:repeat(2,1fr);} }
+
+  /* ---- Section heading ---- */
+  .section{ padding:20px 24px 70px;}
+  .section-head{ display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:30px; flex-wrap:wrap; gap:12px;}
+  .section-head h2{ font-size:28px; font-weight:700;}
+  .section-head .tag{ font-size:13px; color:var(--muted);}
+
+  /* ---- Product grid ---- */
+  .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  @media (max-width:900px){ .grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .grid{grid-template-columns:1fr;} }
+
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:18px; overflow:hidden;
+    display:flex; flex-direction:column; transition:transform .2s ease, border-color .2s ease;
+  }
+  .card:hover{ transform:translateY(-4px); border-color:rgba(200,255,77,0.3);}
+  .card-media{
+    position:relative; aspect-ratio:1/0.85; display:flex; align-items:center; justify-content:center;
+    font-size:64px;
+  }
+  .card-badge{
+    position:absolute; top:12px; left:12px; background:var(--coral); color:#fff; font-size:11px;
+    font-weight:700; padding:5px 10px; border-radius:999px;
+  }
+  .card-fav{
+    position:absolute; top:12px; right:12px; width:32px; height:32px; border-radius:50%;
+    background:rgba(0,0,0,0.35); display:flex; align-items:center; justify-content:center; font-size:14px;
+  }
+  .card-body{ padding:18px 18px 20px; display:flex; flex-direction:column; gap:10px; flex:1;}
+  .card-title{ font-size:15px; font-weight:600;}
+  .card-rating{ font-size:12px; color:var(--muted);}
+  .price-row{ display:flex; align-items:baseline; gap:8px; margin-top:auto;}
+  .price-now{ font-size:20px; font-weight:700; color:var(--lime);}
+  .price-old{ font-size:13px; color:var(--muted); text-decoration:line-through;}
+  .add-btn{
+    margin-top:6px; width:100%; padding:11px; border-radius:10px; border:1px solid var(--line);
+    background:var(--panel-2); color:var(--text); font-weight:600; font-size:13px; cursor:pointer;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .add-btn:hover{ background:var(--lime); color:#0B0F1A; border-color:var(--lime);}
+  .add-btn.added{ background:var(--lime); color:#0B0F1A; border-color:var(--lime);}
+
+  /* media gradients per card */
+  .m1{ background:linear-gradient(160deg,#3a2b6b,#0B0F1A);}
+  .m2{ background:linear-gradient(160deg,#1c3b2e,#0B0F1A);}
+  .m3{ background:linear-gradient(160deg,#5a2233,#0B0F1A);}
+  .m4{ background:linear-gradient(160deg,#243a5e,#0B0F1A);}
+  .m5{ background:linear-gradient(160deg,#4a3419,#0B0F1A);}
+  .m6{ background:linear-gradient(160deg,#33235a,#0B0F1A);}
+
+  /* ---- WhatsApp banner ---- */
+  .wa-banner{
+    max-width:1132px; margin:0 auto 70px; padding:0 24px;
+  }
+  .wa-inner{
+    background:linear-gradient(120deg, var(--panel-2), var(--panel));
+    border:1px solid var(--line); border-radius:20px; padding:34px 36px;
+    display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
+  }
+  .wa-inner h3{ font-size:20px; margin-bottom:6px;}
+  .wa-inner p{ color:var(--muted); font-size:14px;}
+  .wa-btn{
+    background:#25D366; color:#08210f; font-weight:700; padding:14px 24px; border-radius:12px;
+    display:inline-flex; align-items:center; gap:10px; font-size:14px; white-space:nowrap;
+  }
+
+  /* ---- Footer ---- */
+  footer{ border-top:1px solid var(--line); padding:44px 24px 30px;}
+  .foot-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:30px; margin-bottom:30px;}
+  @media (max-width:760px){ .foot-grid{grid-template-columns:1fr 1fr;} }
+  .foot-col h4{ font-size:13px; margin-bottom:14px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em;}
+  .foot-col a, .foot-col p{ display:block; font-size:13px; color:var(--muted); margin-bottom:8px;}
+  .foot-bottom{ border-top:1px solid var(--line); padding-top:20px; font-size:12px; color:var(--muted); text-align:center;}
+
+  /* ---- Cart drawer ---- */
+  .overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,0.55); opacity:0; pointer-events:none;
+    transition:opacity .25s ease; z-index:90;
+  }
+  .overlay.open{ opacity:1; pointer-events:auto;}
+  .drawer{
+    position:fixed; top:0; right:0; height:100%; width:360px; max-width:90vw;
+    background:var(--panel); border-left:1px solid var(--line); z-index:100;
+    transform:translateX(100%); transition:transform .3s ease; display:flex; flex-direction:column;
+  }
+  .drawer.open{ transform:translateX(0);}
+  .drawer-head{ padding:20px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center;}
+  .drawer-items{ flex:1; overflow-y:auto; padding:14px 20px;}
+  .drawer-item{ display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--line); align-items:center;}
+  .drawer-item .di-media{ width:52px; height:52px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0;}
+  .drawer-item .di-name{ font-size:13px; font-weight:600;}
+  .drawer-item .di-price{ font-size:12px; color:var(--muted);}
+  .drawer-foot{ padding:20px; border-top:1px solid var(--line);}
+  .drawer-total{ display:flex; justify-content:space-between; font-weight:700; margin-bottom:14px;}
+  .empty-msg{ color:var(--muted); font-size:13px; text-align:center; padding:40px 0;}
+  .close-x{ cursor:pointer; font-size:20px; color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="ticker"><div class="ticker-track">✦ LIVRAISON RAPIDE PARTOUT&nbsp; &nbsp; ✦ PAIEMENT À LA LIVRAISON&nbsp; &nbsp; ✦ SATISFAIT OU REMBOURSÉ SOUS 7 JOURS&nbsp; &nbsp; ✦ SUPPORT CLIENT 7/7&nbsp; &nbsp; ✦ LIVRAISON RAPIDE PARTOUT&nbsp; &nbsp; ✦ PAIEMENT À LA LIVRAISON&nbsp; &nbsp; ✦ SATISFAIT OU REMBOURSÉ SOUS 7 JOURS&nbsp; &nbsp;</div></div>
+
+<header>
+  <div class="nav">
+    <div class="logo"><span class="dot"></span>NOVAKIT</div>
+    <div class="navlinks">
+      <a href="#produits">Produits</a>
+      <a href="#promos">Promos</a>
+      <a href="#avis">Avis clients</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="navright">
+      <div class="icon-btn">🔍</div>
+      <div class="icon-btn" onclick="openCart()">🛒<span class="cart-count" id="cartCount">0</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">⚡ Nouveauté de la semaine</div>
+  <h1>Des gadgets <span>tendances</span>,<br>testés, approuvés, à prix cassé.</h1>
+  <p>Sélection de produits utiles et originaux, livrés chez vous en quelques jours. Paiement à la livraison disponible.</p>
+  <div class="hero-ctas">
+    <a href="#produits" class="btn btn-primary">Voir les produits →</a>
+    <a href="#contact" class="btn btn-ghost">Nous contacter</a>
+  </div>
+</section>
+
+<div class="trust">
+  <div class="trust-item"><div class="t-ic">🚚</div><div class="t-title">Livraison rapide</div><div class="t-sub">Partout au pays</div></div>
+  <div class="trust-item"><div class="t-ic">💵</div><div class="t-title">Paiement à la livraison</div><div class="t-sub">Payez à réception</div></div>
+  <div class="trust-item"><div class="t-ic">🔁</div><div class="t-title">Satisfait ou remboursé</div><div class="t-sub">Sous 7 jours</div></div>
+  <div class="trust-item"><div class="t-ic">🎧</div><div class="t-title">Support client</div><div class="t-sub">Disponible 7/7</div></div>
+</div>
+
+<section class="section" id="produits">
+  <div class="section-head">
+    <div>
+      <h2>Nos produits les plus vendus</h2>
+      <div class="tag">Choisis par nos clients, réapprovisionnés chaque semaine</div>
+    </div>
+  </div>
+
+  <div class="grid" id="productGrid">
+    <!-- cards injected by JS -->
+  </div>
+</section>
+
+<div class="wa-banner">
+  <div class="wa-inner">
+    <div>
+      <h3>Une question avant de commander ?</h3>
+      <p>Écrivez-nous sur WhatsApp, réponse en quelques minutes.</p>
+    </div>
+    <a href="https://wa.me/0000000000" target="_blank" class="wa-btn">💬 Discuter sur WhatsApp</a>
+  </div>
+</div>
+
+<footer id="contact">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <div class="logo" style="margin-bottom:12px;"><span class="dot"></span>NOVAKIT</div>
+      <p style="max-width:260px;">Boutique en ligne de gadgets tendances et pratiques, sélectionnés pour leur qualité et leur prix.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Boutique</h4>
+      <a href="#produits">Tous les produits</a>
+      <a href="#promos">Promotions</a>
+      <a href="#avis">Avis clients</a>
+    </div>
+    <div class="foot-col">
+      <h4>Aide</h4>
+      <a href="#">Suivre ma commande</a>
+      <a href="#">Livraison & retours</a>
+      <a href="#">FAQ</a>
+    </div>
+    <div class="foot-col">
+      <h4>Contact</h4>
+      <p>WhatsApp : 07 00 00 00 00</p>
+      <p>Email : contact@novakit.shop</p>
+    </div>
+  </div>
+  <div class="foot-bottom">Site de démonstration — © 2026 NOVAKIT. Créé avec Claude.</div>
+</footer>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <strong>Votre panier</strong>
+    <span class="close-x" onclick="closeCart()">✕</span>
+  </div>
+  <div class="drawer-items" id="drawerItems"></div>
+  <div class="drawer-foot">
+    <div class="drawer-total"><span>Total</span><span id="drawerTotal">0 Dh</span></div>
+    <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="alert('Ceci est une démo — aucune commande réelle ne sera passée.')">Passer la commande</button>
+  </div>
+</div>
+
+<script>
+const products = [
+  {id:1, icon:'🎨', media:'m1', badge:'-30%', title:'Aérographe sans fil rechargeable', rating:'★★★★★ (214 avis)', price:349, old:500},
+  {id:2, icon:'🔦', media:'m2', badge:'-17%', title:'Lampe torche multi-usage haute puissance', rating:'★★★★☆ (98 avis)', price:249, old:300},
+  {id:3, icon:'🍦', media:'m3', badge:'Nouveau', title:'Machine à glace maison instantanée', rating:'★★★★★ (156 avis)', price:349, old:600},
+  {id:4, icon:'💆', media:'m4', badge:'-25%', title:'Masseur électrique portable', rating:'★★★★☆ (73 avis)', price:299, old:399},
+  {id:5, icon:'🌿', media:'m5', badge:'Best-seller', title:'Sécateur électrique de jardin', rating:'★★★★★ (312 avis)', price:279, old:450},
+  {id:6, icon:'💇', media:'m6', badge:'-20%', title:'Lisseur vapeur professionnel', rating:'★★★★☆ (140 avis)', price:329, old:420},
+];
+
+let cart = [];
+
+function renderProducts(){
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = products.map(p => `
+    <div class="card">
+      <div class="card-media ${p.media}">
+        <span class="card-badge">${p.badge}</span>
+        <span class="card-fav">♡</span>
+        <span>${p.icon}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${p.title}</div>
+        <div class="card-rating">${p.rating}</div>
+        <div class="price-row">
+          <span class="price-now">${p.price} Dh</span>
+          <span class="price-old">${p.old} Dh</span>
+        </div>
+        <button class="add-btn" id="btn-${p.id}" onclick="addToCart(${p.id})">Ajouter au panier</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addToCart(id){
+  const p = products.find(x=>x.id===id);
+  cart.push(p);
+  const btn = document.getElementById('btn-'+id);
+  btn.textContent = 'Ajouté ✓';
+  btn.classList.add('added');
+  setTimeout(()=>{ btn.textContent='Ajouter au panier'; btn.classList.remove('added'); }, 1200);
+  updateCartUI();
+}
+
+function updateCartUI(){
+  document.getElementById('cartCount').textContent = cart.length;
+  const itemsEl = document.getElementById('drawerItems');
+  if(cart.length===0){
+    itemsEl.innerHTML = '<div class="empty-msg">Votre panier est vide.<br>Ajoutez un produit pour commencer.</div>';
+  } else {
+    itemsEl.innerHTML = cart.map(p => `
+      <div class="drawer-item">
+        <div class="di-media ${p.media}">${p.icon}</div>
+        <div style="flex:1;">
+          <div class="di-name">${p.title}</div>
+          <div class="di-price">${p.price} Dh</div>
+        </div>
+      </div>
+    `).join('');
+  }
+  const total = cart.reduce((s,p)=>s+p.price,0);
+  document.getElementById('drawerTotal').textContent = total + ' Dh';
+}
+
+function openCart(){
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+}
+function closeCart(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+renderProducts();
+updateCartUI();
+</script>
+
+</body>
+</html>
